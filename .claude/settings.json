@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm lint)",
+      "Bash(pnpm generate:types)",
+      "Bash(pnpm generate:importmap)",
+      "Bash(tsc --noEmit)",
+      "Bash(pnpm test:int)"
+    ],
+    "deny": ["Bash(rm -rf *)", "Bash(pnpm deploy*)"]
+  }
+}
