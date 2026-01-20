@@ -19,7 +19,7 @@ const nextConfig = {
       webpackConfig.plugins = webpackConfig.plugins || []
       webpackConfig.plugins.push(
         new webpack.IgnorePlugin({
-          resourceRegExp: /^drizzle-kit$/,
+          resourceRegExp: /^drizzle-kit(\/|$)/,
         }),
       )
     }
