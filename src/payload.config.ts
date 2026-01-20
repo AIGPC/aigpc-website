@@ -39,7 +39,7 @@ export default buildConfig({
   db: sqliteD1Adapter({ binding: cloudflare.env.D1 }),
   plugins: [
     r2Storage({
-      bucket: cloudflare.env.R2,
+      bucket: cloudflare.env.R2 as any, // Type cast needed due to @payloadcms/storage-r2 type incompatibility with latest Cloudflare Workers types
       collections: { media: true },
     }),
   ],
