@@ -7,20 +7,21 @@ const nextConfig = {
   serverExternalPackages: ['jose', 'pg-cloudflare'],
 
   // Your Next.js config here
-  webpack: (webpackConfig: any, { isServer }: any) => {
+  webpack: (webpackConfig: any, { isServer, webpack }: any) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],
       '.js': ['.ts', '.tsx', '.js', '.jsx'],
       '.mjs': ['.mts', '.mjs'],
     }
 
-    // Replace drizzle-kit with stub in server bundle (dev-only package, not needed at runtime)
+    // Replace drizzle-kit imports with empty module (dev-only package, not needed at runtime)
     if (isServer) {
-      webpackConfig.resolve = webpackConfig.resolve || {}
-      webpackConfig.resolve.alias = {
-        ...webpackConfig.resolve.alias,
-        'drizzle-kit': false,
-      }
+      webpackConfig.plugins = webpackConfig.plugins || []
+      webpackConfig.plugins.push(
+        new webpack.IgnorePlugin({
+          resourceRegExp: /^drizzle-kit$/,
+        }),
+      )
     }
 
     return webpackConfig
