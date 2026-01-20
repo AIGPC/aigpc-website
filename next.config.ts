@@ -25,7 +25,7 @@ const nextConfig = {
       webpackConfig.plugins.push(
         new webpack.NormalModuleReplacementPlugin(
           /^drizzle-kit$/,
-          path.resolve(__dirname, 'lib/drizzle-kit-stub.js'),
+          path.resolve(__dirname, 'lib/drizzle-kit-stub.cjs'),
         ),
       )
     }
