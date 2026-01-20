@@ -1,4 +1,9 @@
 import { withPayload } from '@payloadcms/next/withPayload'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -14,13 +19,14 @@ const nextConfig = {
       '.mjs': ['.mts', '.mjs'],
     }
 
-    // Replace drizzle-kit imports with empty module (dev-only package, not needed at runtime)
+    // Replace drizzle-kit with mock (dev-only package, not needed at runtime)
     if (isServer) {
       webpackConfig.plugins = webpackConfig.plugins || []
       webpackConfig.plugins.push(
-        new webpack.IgnorePlugin({
-          resourceRegExp: /^drizzle-kit(\/|$)/,
-        }),
+        new webpack.NormalModuleReplacementPlugin(
+          /^drizzle-kit$/,
+          path.resolve(__dirname, 'lib/drizzle-kit-mock.js'),
+        ),
       )
     }
 
